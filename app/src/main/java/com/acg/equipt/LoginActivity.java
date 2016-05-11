@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatButton btnLogin;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
+
     private String TAG = LoginActivity.class.getSimpleName();
 
     @Override
