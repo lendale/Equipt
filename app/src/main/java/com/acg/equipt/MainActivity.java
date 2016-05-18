@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Intent mapIntent = new Intent(this, MapsActivity.class);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_map);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,4 +81,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    private void hello(){}
+    
+
 }
