@@ -28,6 +28,7 @@ public class MapsActivity extends FragmentActivity {
     private AppCompatButton btnSearch;
     private TextInputEditText etSearchLoc;
     private String location;
+    private String test = "test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

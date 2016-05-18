@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -25,6 +27,9 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatButton btnLogin;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.link_signup)
+    TextView _signupLink;
+
     Firebase mRef,mPass;
     private String TAG = LoginActivity.class.getSimpleName();
 
@@ -36,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         ButterKnife.bind(this);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +49,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        _signupLink.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                // Start the Signup activity
+                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                startActivityForResult(intent, REQUEST_SIGNUP);
+            }
+        });
 
 
     }
@@ -67,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
                         onLoginSuccess();
-                        // onLoginFailed();
+//                        onLoginFailed();
                         progressDialog.dismiss();
                     }
                 }, 2000);
@@ -106,19 +120,21 @@ public class LoginActivity extends AppCompatActivity {
         boolean valid = true;
         mRef = new Firebase("https://pointed-ads.firebaseio.com/Email");
         mPass = new Firebase("https://pointed-ads.firebaseio.com/Password");
-        String superUser = String.valueOf(mRef);
-        String superPass = String.valueOf(mPass);
+        String superUser = mRef.toString();
+        String superPass = mPass.toString();
         String email = String.valueOf(etEmail.getText());
         String passwd = String.valueOf(etPasswd.getText());
+
+        Log.d(TAG, "EMAIL: " + superUser + "\nPASS: " + superPass);
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Enter a valid email address");
             valid = false;
         }
 
-        else if(!email.contentEquals(superUser)){
-            etEmail.setError("Invalid email address");
-        }
+//        else if(!email.contentEquals(superUser)){
+//            etEmail.setError("Invalid email address");
+//        }
 
         else {
             etEmail.setError(null);
@@ -129,9 +145,9 @@ public class LoginActivity extends AppCompatActivity {
             valid = false;
         }
 
-        else if(!passwd.contentEquals(superPass)){
-            etEmail.setError("Invalid password");
-        }
+//        else if(!passwd.contentEquals(superPass)){
+//            etPasswd.setError("Invalid password");
+//        }
         else {
             etPasswd.setError(null);
         }
