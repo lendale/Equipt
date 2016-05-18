@@ -1,15 +1,11 @@
 package com.acg.equipt;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,14 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.acg.equipt.Fragments.FragmentDrawer;
-import com.acg.equipt.Fragments.fragment_customers;
-import com.acg.equipt.Fragments.fragment_home;
-import com.acg.equipt.Fragments.fragment_search;
-
-public class MainActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
+public class MainActivity extends AppCompatActivity {
     private String LOG_TAG = MainActivity.class.getSimpleName();
-    private FragmentDrawer drawerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +36,6 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 startActivity(mapIntent);
             }
         });
-
-
-
-        drawerFragment = (FragmentDrawer)
-                getFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
-        drawerFragment.setDrawerListener(this);
-
-        // display the first navigation drawer view on app launch
-        displayView(0);
-
     }
 
     @Override
@@ -101,40 +80,5 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             Log.d(LOG_TAG, "Couldn't call " + location + ", no receiving apps installed!");
         }
 
-    }
-
-    @Override
-    public void onDrawerItemSelected(View view, int position) {
-
-    }
-    private void displayView(int position) {
-        Fragment fragment = null;
-        String title = getString(R.string.app_name);
-        switch (position) {
-            case 0:
-                fragment = new fragment_home();
-                title = getString(R.string.title_home);
-                break;
-            case 1:
-                fragment = new fragment_search();
-                title = getString(R.string.title_friends);
-                break;
-            case 2:
-                fragment = new fragment_customers();
-                title = getString(R.string.title_messages);
-                break;
-            default:
-                break;
-        }
-
-        if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container_body, fragment);
-            fragmentTransaction.commit();
-
-            // set the toolbar title
-            getSupportActionBar().setTitle(title);
-        }
     }
 }
