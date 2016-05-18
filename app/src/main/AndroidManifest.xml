@@ -50,7 +50,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.acg.equipt.MainActivity" />
         </activity>
-        <activity android:name=".SignupActivity"></activity>
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@style/AppTheme.Dark"></activity>
     </application>
 
 </manifest>
