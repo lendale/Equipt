@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#054148</color>
     <color name="colorPrimaryDarker">#04393f</color>
     <color name="colorAccent">#f79f66</color>
-
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="textColorPrimary">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
     <color name="oil">#333333</color>
