@@ -8,8 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.client.Firebase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,9 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatButton btnLogin;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
-    @BindView(R.id.link_signup)
-    TextView _signupLink;
-
+    Firebase mRef,mPass;
     private String TAG = LoginActivity.class.getSimpleName();
 
     @Override
@@ -35,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,15 +41,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        _signupLink.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
-            }
-        });
+
+
     }
 
     public void login() {
@@ -110,25 +102,42 @@ public class LoginActivity extends AppCompatActivity {
 
     public boolean validate() {
         boolean valid = true;
-
+        mRef = new Firebase("https://pointed-ads.firebaseio.com/Email");
+        mPass = new Firebase("https://pointed-ads.firebaseio.com/Password");
+        String superUser = String.valueOf(mRef);
+        String superPass = String.valueOf(mPass);
         String email = String.valueOf(etEmail.getText());
         String passwd = String.valueOf(etPasswd.getText());
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             etEmail.setError("Enter a valid email address");
             valid = false;
-        } else {
+        }
+
+        else if(!email.contentEquals(superUser)){
+            etEmail.setError("Invalid email address");
+        }
+
+        else {
             etEmail.setError(null);
         }
 
         if (passwd.isEmpty() || passwd.length() < 4 || passwd.length() > 10) {
             etPasswd.setError("between 4 and 10 alphanumeric characters");
             valid = false;
-        } else {
+        }
+
+        else if(!passwd.contentEquals(superPass)){
+            etEmail.setError("Invalid password");
+        }
+        else {
             etPasswd.setError(null);
         }
 
         return valid;
     }
+
+
+
 
 }
