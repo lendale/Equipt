@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Firebase.setAndroidContext(this);
+
         ButterKnife.bind(this);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
